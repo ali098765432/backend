@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   },
   resetPasswordOTP: String, // Add this field to store the OTP
   resetPasswordExpires: Date, // Add this field to store the expiration timestamp
+  
 });
 
 module.exports = mongoose.model('users', userSchema);

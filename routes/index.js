@@ -23,11 +23,14 @@ const registerStorage = multer.diskStorage({
 
 
 // Define your routes and associate them with controllers
-router.post('/register', registerUpload.single('avatar'), userController.registerUser);
-router.post('/login',loginUpload.none(), userController.loginUser);
-router.post('/forgot-password', authController.forgotPassword);
+router.post('/register',authenticateMiddleware.redirectIfAuthenticated, registerUpload.single('avatar'), userController.registerUser);
+router.post('/login',authenticateMiddleware.redirectIfAuthenticated,loginUpload.none(), userController.loginUser);
+router.post('/forgot-password', authenticateMiddleware.authenticateToken, authController.forgotPassword);
 router.post('/verify-otp', authController.verifyOTP);
 router.post('/reset-password', authController.resetPassword);
+//router.post('/resend-otp', authController.resetOTP);
 router.get('/getUser', authenticateMiddleware.authenticateToken, authController.getUser);
+router.post('/addcars',authenticateMiddleware.authenticateToken, userController.addCar);
+router.get('/profile/:userId',authenticateMiddleware.authenticateToken,userController.profile )
 
 module.exports = router;

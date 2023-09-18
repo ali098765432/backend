@@ -72,7 +72,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
     <script src="../../assets/vendor/js/template-customizer.js"></script>
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <!--? Config:  Mandatory theme config file contan global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../../assets/js/config.js"></script>
 </head>
 
@@ -121,7 +121,7 @@
         <form id="formAuthentication" class="mb-3" action="/register" method="POST">
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus>
+            <input type="text" class="form-control" id="username" name="name" placeholder="Enter your username" autofocus>
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -142,11 +142,16 @@
 
           
           <!-- auth/register.hbs -->
-{{#if error}}
-<div class="alert alert-danger" role="alert">
-  {{error}}
-</div>
-{{/if}}
+<div class="mb-3">
+    <!-- Display the error or success message if it exists -->
+    {{#if error}}
+      <p class="text-danger">{{error}}</p>
+    {{/if}}
+    {{#if success}}
+      <p class="text-success">{{message}}</p>
+    {{/if}}
+  </div>
+</form>
 
 <!-- Your registration form here -->
         </form>
@@ -214,9 +219,16 @@
 
   <!-- Page JS -->
   <script src="../../assets/js/pages-auth.js"></script>
+  
   <script>
-    
-  </script>  
+  // Automatically remove success or error messages after a few seconds
+  setTimeout(() => {
+    const messages = document.querySelectorAll('.text-success, .text-danger');
+    messages.forEach(message => {
+      message.style.display = 'none';
+    });
+  }, 5000); // Adjust the time (in milliseconds) as needed
+</script>
 </body>
 
 

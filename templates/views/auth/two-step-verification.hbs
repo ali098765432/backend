@@ -146,12 +146,14 @@
 
         <h3 class="mb-1 fw-bold">Two Step Verification 💬</h3>
         <p class="text-start mb-4">
-          We sent a verification code to your mobile. Enter the code from the mobile in the field below.
-          <span class="fw-bold d-block mt-2">******1234</span>
+          We sent a verification code to your email. Enter the code from the mobile in the field below.
+          <span class="fw-bold d-block mt-2">check your mail</span>
         </p>
-        <p class="mb-0 fw-semibold">Type your 6 digit security code</p>
-        <form id="twoStepsForm" action="/reset-password" method="get">
+        <p class="mb-0 fw-semibold">Type your email here</p>
+        <form id="twoStepsForm" action="/verify-otp" method="post">
           <div class="mb-3">
+             <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email or username" autofocus>
+             <p class="mb-0 fw-semibold">Type your 6 digit security code</p>
             <div class="auth-input-wrapper d-flex align-items-center justify-content-sm-between numeral-mask-wrapper">
               <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" autofocus>
               <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1">
@@ -161,16 +163,26 @@
               <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1">
             </div>
             <!-- Create a hidden field which is combined by 3 fields above -->
+            
             <input type="hidden" name="otp" />
           </div>
           <button class="btn btn-primary d-grid w-100 mb-3">
             Verify my account
           </button>
-          <div class="text-center">Didn't get the code?
+          {{!-- <div class="text-center">Didn't get the code?
             <a href="javascript:void(0);">
               Resend
             </a>
-          </div>
+          </div> --}}
+           <div class="mb-3">
+    <!-- Display the error or success message if it exists -->
+    {{#if error}}
+      <p class="text-danger">{{error}}</p>
+    {{/if}}
+    {{#if success}}
+      <p class="text-success">{{message}}</p>
+    {{/if}}
+  </div>
         </form>
       </div>
     </div>
@@ -213,7 +225,15 @@
   <!-- Page JS -->
   <script src="../../assets/js/pages-auth.js"></script>
 <script src="../../assets/js/pages-auth-two-steps.js"></script>
-  
+     <script>
+  // Automatically remove success or error messages after a few seconds
+  setTimeout(() => {
+    const messages = document.querySelectorAll('.text-success, .text-danger');
+    messages.forEach(message => {
+      message.style.display = 'none';
+    });
+  }, 5000); // Adjust the time (in milliseconds) as needed
+</script>
 </body>
 
 

@@ -29,7 +29,8 @@
     <!-- Canonical SEO -->
     <link rel="canonical" href="https://1.envato.market/vuexy_admin">
     
-    
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <!-- ? PROD Only: Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -134,17 +135,21 @@
               <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
             </div>
           </div>
-          <div class="mb-3">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="remember-me">
-              <label class="form-check-label" for="remember-me">
-                Remember Me
-              </label>
-            </div>
-          </div>
+         
           <button class="btn btn-primary d-grid w-100">
             Sign in
           </button>
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+          <div class="mb-3">
+    <!-- Display the error or success message if it exists -->
+    {{#if error}}
+      <p class="text-danger">{{error}}</p>
+    {{/if}}
+    {{#if success}}
+      <p class="text-success">{{message}}</p>
+    {{/if}}
+  </div>
         </form>
 
         <p class="text-center">
@@ -210,7 +215,23 @@
 
   <!-- Page JS -->
   <script src="../../assets/js/pages-auth.js"></script>
-  
+   <script>
+  // Automatically remove success or error messages after a few seconds
+  setTimeout(() => {
+    const messages = document.querySelectorAll('.text-success, .text-danger');
+    messages.forEach(message => {
+      message.style.display = 'none';
+    });
+  }, 5000); // Adjust the time (in milliseconds) as needed
+</script>
+  <script>
+// Check if the user is already authenticated
+if (localStorage.getItem('token')) {
+  //console.log(localStorage.getItem('token'));
+    // Redirect the user to a protected route or dashboard
+    window.location.href = '/';
+}
+</script>
 </body>
 
 
